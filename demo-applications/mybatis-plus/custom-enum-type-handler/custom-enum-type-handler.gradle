@@ -1,0 +1,6 @@
+
+dependencies {
+    implementation project(":demo-commons:utils")
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    runtimeOnly 'mysql:mysql-connector-java'
+}

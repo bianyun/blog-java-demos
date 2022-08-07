@@ -1,0 +1,45 @@
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
+
+plugins {
+    id 'org.springframework.boot' version '2.7.2' apply false
+}
+
+configure(allprojects) { project ->
+    apply plugin: 'io.spring.dependency-management'
+
+    group 'blog.widecoder'
+    version '1.0.0-SNAPSHOT'
+
+    ext {
+        hutoolVersion = '5.8.4'
+        mapstructVersion = '1.5.2.Final'
+        jsr305Version = '3.0.2'
+
+        mybatisPlusVersion = '3.5.2'
+//        mybatisPlusVersion = '3.3.0'
+    }
+
+    dependencyManagement {
+        resolutionStrategy {
+            cacheChangingModulesFor 0, "seconds"
+        }
+        repositories {
+            maven { url 'https://maven.aliyun.com/repository/public' }
+            mavenCentral()
+        }
+        imports {
+            mavenBom SpringBootPlugin.BOM_COORDINATES
+        }
+    }
+
+    configurations.all {
+        resolutionStrategy {
+            cacheChangingModulesFor 0, "seconds"
+            cacheDynamicVersionsFor 0, "seconds"
+        }
+    }
+}
+
+
+
+

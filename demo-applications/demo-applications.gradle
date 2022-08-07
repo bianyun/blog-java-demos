@@ -1,0 +1,43 @@
+
+subprojects {
+    subprojects {
+        apply plugin: 'java'
+        apply plugin: 'org.springframework.boot'
+
+        sourceCompatibility = JavaVersion.VERSION_1_8
+
+        tasks.withType(JavaCompile) {
+            options.encoding = "UTF-8"
+        }
+
+        configurations {
+            compileOnly {
+                extendsFrom annotationProcessor
+            }
+        }
+
+        compileJava {
+            options.compilerArgs = [
+                    '-Amapstruct.suppressGeneratorTimestamp=true',
+                    '-Amapstruct.suppressGeneratorVersionInfoComment=true',
+                    '-Amapstruct.defaultComponentModel=spring',
+                    '-Amapstruct.unmappedTargetPolicy=IGNORE',
+                    '-Amapstruct.verbose=false',
+                    '-Amapstruct.defaultInjectionStrategy=constructor'
+            ]
+        }
+
+        dependencies {
+            compileOnly 'org.projectlombok:lombok'
+            annotationProcessor 'org.projectlombok:lombok'
+
+            implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+            testImplementation "org.mapstruct:mapstruct:${mapstructVersion}"
+            annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+
+            developmentOnly 'org.springframework.boot:spring-boot-devtools'
+            annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+            testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        }
+    }
+}

@@ -1,0 +1,21 @@
+pluginManagement {
+    repositories {
+        maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+include "demo-commons:utils"
+include "demo-applications:mybatis-plus:custom-enum-type-handler"
+
+
+rootProject.name = "blog-java-demos"
+rootProject.children.each { subproject ->
+    rename_build_file_to_module_name(subproject)
+}
+
+void rename_build_file_to_module_name(project) {
+    project.buildFileName = "${project.name}.gradle"
+    project.children.each { child -> rename_build_file_to_module_name(child) }
+}
